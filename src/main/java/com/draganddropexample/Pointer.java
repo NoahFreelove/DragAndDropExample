@@ -82,7 +82,7 @@ public class Pointer {
     }
 
     // Implement your own validation code here if you'd like to not let the user drag into certain areas
-    // I just set it up to not let you drag it below the toolbar which starts at y = 400 px
+    // I just set it up to not let you drag it below the toolbar which starts at y = 500 px
     private boolean isValidPos(double xPosition, double yPosition){
         int lowerScreenBoundary = 500;
         if(yPosition < lowerScreenBoundary)
@@ -92,10 +92,15 @@ public class Pointer {
 
     } // This function can be simplified to: return yPosition < lowerScreenBoundary;
 
-    //
+    // This method allows the Items to tell the pointer that they are selected
     public void setSelectedObject(Item selectedObject) {
+        // Create our preview rectangle
         this.selectedObject = new Rectangle(x-32,y-32,64,64);
+        // Set it to the color of the selected rectangle
         this.selectedObject.setFill(selectedObject.getColor());
+
+        // We need to check if the Root already contains the selected object because you can try to remove an object
+        // Multiple times from a Group but if you try to add it twice, it'll throw an error.
         if(!Main.root.getChildren().contains(this.selectedObject))
         {
             Main.root.getChildren().add(this.selectedObject);
